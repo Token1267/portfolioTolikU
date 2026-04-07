@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Савур — Ресторан высокой кухни</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0804;
+    --dark: #111009;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f5efe6;
+    --muted: #7a7060;
+    --border: rgba(201,168,76,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2rem 4rem;
+    background: linear-gradient(to bottom, rgba(10,8,4,0.95), transparent);
+    transition: all 0.4s;
+  }
+  nav.scrolled {
+    padding: 1.2rem 4rem;
+    background: rgba(10,8,4,0.97);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(245,239,230,0.7);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-reserve {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 0.6rem 1.6rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.3s;
+  }
+  .nav-reserve:hover { background: var(--gold); color: var(--black); }
+
+  /* HERO */
+  .hero {
+    height: 100vh;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(201,168,76,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 30%, rgba(201,168,76,0.04) 0%, transparent 50%),
+      linear-gradient(160deg, #0a0804 0%, #15100a 50%, #0a0804 100%);
+  }
+  .hero-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+  .hero-content {
+    text-align: center;
+    z-index: 1;
+    animation: fadeUp 1.4s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 12vw, 10rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+  .hero-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,239,230,0.5);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 1rem;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+    transition: gap 0.3s;
+  }
+  .hero-cta:hover { gap: 1.5rem; }
+  .hero-cta::after {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+  .hero-cta:hover::after { width: 60px; }
+  .hero-scroll {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(245,239,230,0.3);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.5); opacity: 0.3; }
+  }
+
+  /* SECTION BASE */
+  section { padding: 8rem 4rem; }
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 30px; height: 1px;
+    background: var(--gold);
+  }
+
+  /* ABOUT */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center; }
+  .about-visual {
+    position: relative;
+    height: 600px;
+  }
+  .about-img-frame {
+    position: absolute;
+    width: 75%; height: 85%;
+    top: 0; left: 0;
+    background: linear-gradient(135deg, #1a1208, #0f0c06);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .about-img-frame::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 40% 40%, rgba(201,168,76,0.1), transparent 70%);
+  }
+  .plate-icon {
+    width: 120px; height: 120px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    opacity: 0.4;
+  }
+  .about-img-accent {
+    position: absolute;
+    width: 50%; height: 55%;
+    bottom: 0; right: 0;
+    background: linear-gradient(135deg, #201808, #120e05);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-img-accent::after {
+    content: 'Est. 2019';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0.5;
+  }
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 2rem;
+  }
+  .about-text h2 em { font-style: italic; color: var(--gold); }
+  .about-text p {
+    color: rgba(245,239,230,0.55);
+    font-size: 0.85rem;
+    line-height: 2;
+    margin-bottom: 1.5rem;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 3rem;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+  .stat {
+    padding: 1.5rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-top: 0.3rem;
+  }
+
+  /* MENU */
+  .menu-section { background: linear-gradient(180deg, var(--black) 0%, var(--dark) 50%, var(--black) 100%); }
+  .menu-header { text-align: center; margin-bottom: 5rem; }
+  .menu-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+  }
+  .menu-header h2 em { font-style: italic; color: var(--gold); }
+  .menu-tabs {
+    display: flex; justify-content: center; gap: 0;
+    margin-top: 2rem;
+    border: 1px solid var(--border);
+    display: inline-flex;
+  }
+  .menu-tab {
+    padding: 0.8rem 2rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: none;
+    border-right: 1px solid var(--border);
+    transition: all 0.3s;
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--border);
+  }
+  .menu-tab:last-child { border-right: none; }
+  .menu-tab.active, .menu-tab:hover { background: rgba(201,168,76,0.08); color: var(--gold); }
+  .menu-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    max-width: 900px; margin: 0 auto;
+  }
+  .menu-item {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .menu-item:hover { background: rgba(201,168,76,0.04); }
+  .menu-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+  .menu-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--cream);
+  }
+  .menu-item-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+  .menu-item-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .menu-item-tag {
+    display: inline-block;
+    margin-top: 0.8rem;
+    padding: 0.2rem 0.7rem;
+    border: 1px solid var(--border);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* EXPERIENCE */
+  .experience {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .experience::before {
+    content: 'САВУР';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20vw;
+    font-weight: 300;
+    color: rgba(201,168,76,0.03);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .experience h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+  .experience h2 em { font-style: italic; color: var(--gold); }
+  .experience p {
+    max-width: 500px; margin: 0 auto 4rem;
+    color: rgba(245,239,230,0.5);
+    font-size: 0.82rem;
+    line-height: 2;
+  }
+  .exp-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    max-width: 800px; margin: 0 auto;
+  }
+  .exp-item {
+    background: var(--black);
+    padding: 3rem 2rem;
+    transition: background 0.4s;
+  }
+  .exp-item:hover { background: rgba(201,168,76,0.05); }
+  .exp-icon {
+    width: 50px; height: 50px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.2rem;
+    color: var(--gold);
+  }
+  .exp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+    color: var(--cream);
+  }
+  .exp-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.8; }
+
+  /* RESERVATION */
+  .reservation {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), transparent);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .reservation h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    margin-bottom: 0.8rem;
+  }
+  .reservation h2 em { font-style: italic; color: var(--gold); }
+  .reservation p {
+    color: rgba(245,239,230,0.5);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 3rem;
+  }
+  .res-form {
+    display: grid; grid-template-columns: repeat(3, 1fr) auto;
+    gap: 0;
+    max-width: 800px; margin: 0 auto;
+    border: 1px solid var(--border);
+  }
+  .res-form input, .res-form select {
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--cream);
+    padding: 1.2rem 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    outline: none;
+    width: 100%;
+  }
+  .res-form input::placeholder { color: var(--muted); }
+  .res-form select option { background: var(--dark); }
+  .res-submit {
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    padding: 0 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: background 0.3s;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .res-submit:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    padding: 4rem;
+    border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 2rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+  }
+  .footer-center {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    line-height: 2;
+  }
+  .footer-right {
+    text-align: right;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    align-items: flex-end;
+  }
+  .footer-right a {
+    color: rgba(245,239,230,0.4);
+    text-decoration: none;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    transition: color 0.3s;
+  }
+  .footer-right a:hover { color: var(--gold); }
+  .footer-bottom {
+    padding: 1.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.08);
+  }
+  .footer-bottom span {
+    font-size: 0.6rem;
+    color: rgba(245,239,230,0.2);
+    letter-spacing: 0.15em;
+  }
+  .credit {
+    font-size: 0.6rem;
+    color: rgba(245,239,230,0.2);
+    letter-spacing: 0.15em;
+  }
+  .credit a { color: var(--gold); opacity: 0.5; text-decoration: none; }
+
+/* BURGER */
+  .burger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 101; }
+  .burger span { display: block; width: 24px; height: 2px; background: var(--gold); margin: 5px 0; transition: all 0.3s; }
+  .burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .burger.active span:nth-child(2) { opacity: 0; }
+  .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 1; transform: translateY(25px); transition: all 0.9s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+    nav { padding: 1.2rem 1.5rem; }
+    .burger { display: block; cursor: pointer; }
+    .nav-links {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10,8,4,0.97);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2rem;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      z-index: 100;
+    }
+    .nav-links.open { transform: translateX(0); }
+    .nav-links a { font-size: 1rem; }
+    .nav-reserve { display: none; }
+
+    section { padding: 4rem 1.5rem; }
+    #about { padding: 4rem 1.5rem !important; }
+
+    .hero-title { font-size: clamp(4rem, 16vw, 7rem); }
+
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .about-visual { height: 350px; }
+    .about-img-frame { width: 85%; height: 80%; }
+    .about-img-accent { width: 55%; height: 50%; }
+
+    .menu-grid { grid-template-columns: 1fr; }
+    .menu-item { padding: 1.5rem; }
+    .menu-tabs { display: flex; width: 100%; }
+    .menu-tab { flex: 1; padding: 0.8rem 1rem; cursor: pointer; }
+
+    .exp-grid { grid-template-columns: 1fr; }
+
+    .res-form { grid-template-columns: 1fr; }
+    .res-form input, .res-form select { border-right: none; border-bottom: 1px solid var(--border); }
+    .res-submit { padding: 1.2rem 2rem; cursor: pointer; }
+
+    footer { grid-template-columns: 1fr; text-align: center; padding: 3rem 1.5rem; }
+    .footer-right { align-items: center; }
+    .footer-bottom { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+
+    /* Fix cursor:none on mobile */
+    .nav-reserve, .menu-tab, .res-submit { cursor: pointer; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <div class="nav-logo">Савур</div>
+  <button class="burger" id="burger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active')"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#menu">Меню</a></li>
+    <li><a href="#experience">Атмосфера</a></li>
+    <li><a href="#reservation">Контакты</a></li>
+  </ul>
+  <button class="nav-reserve">Забронировать</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Ресторан высокой кухни · Москва</p>
+    <h1 class="hero-title">Са<em>вур</em></h1>
+    <p class="hero-subtitle">Гастрономия как искусство</p>
+    <a href="#menu" class="hero-cta">Смотреть меню</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Листать</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding: 8rem 6rem;">
+  <div class="about reveal">
+    <div class="about-visual">
+      <div class="about-img-frame">
+        <div class="plate-icon">✦</div>
+      </div>
+      <div class="about-img-accent"></div>
+    </div>
+    <div class="about-text">
+      <div class="section-label">О ресторане</div>
+      <h2>Каждое блюдо —<br><em>история</em></h2>
+      <p>Савур — это пространство, где классические гастрономические традиции встречаются с современным видением. Мы верим, что трапеза — это не просто еда, а полный чувственный опыт.</p>
+      <p>Шеф-повар Дмитрий Арсеньев создаёт меню, вдохновлённое сезонными продуктами и путешествиями по миру. Каждый ингредиент выбирается лично.</p>
+      <div class="about-stats">
+        <div class="stat"><span class="stat-num">12</span><span class="stat-label">Позиций</span></div>
+        <div class="stat"><span class="stat-num">5★</span><span class="stat-label">Рейтинг</span></div>
+        <div class="stat"><span class="stat-num">6</span><span class="stat-label">Лет</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="menu-section reveal">
+  <div class="menu-header">
+    <div class="section-label" style="justify-content:center">Сезонное меню</div>
+    <h2>Вкус <em>без компромиссов</em></h2>
+    <div class="menu-tabs" style="margin-top:2rem; border:1px solid var(--border);">
+      <button class="menu-tab active">Закуски</button>
+      <button class="menu-tab">Основные</button>
+      <button class="menu-tab">Десерты</button>
+    </div>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-item">
+      <div class="menu-item-header">
+        <span class="menu-item-name">Тартар из говядины</span>
+        <span class="menu-item-price">980 ₽</span>
+      </div>
+      <p class="menu-item-desc">Мраморная говядина, трюфельное масло, перепелиное яйцо, ржаные крутоны</p>
+      <span class="menu-item-tag">Шеф рекомендует</span>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-header">
+        <span class="menu-item-name">Гребешок с икрой</span>
+        <span class="menu-item-price">1 450 ₽</span>
+      </div>
+      <p class="menu-item-desc">Камчатский гребешок, крем из цветной капусты, икра лосося, укроп</p>
+      <span class="menu-item-tag">Деликатес</span>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-header">
+        <span class="menu-item-name">Фуа-гра фламбе</span>
+        <span class="menu-item-price">1 850 ₽</span>
+      </div>
+      <p class="menu-item-desc">Утиная печень, карамелизованный инжир, бриошь, соус из портвейна</p>
+    </div>
+    <div class="menu-item">
+      <div class="menu-item-header">
+        <span class="menu-item-name">Карпаччо из тунца</span>
+        <span class="menu-item-price">1 100 ₽</span>
+      </div>
+      <p class="menu-item-desc">Голубой тунец, трюфельная эмульсия, каперсы, микрозелень</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="experience reveal">
+  <div class="section-label" style="justify-content:center">Атмосфера</div>
+  <h2>Больше чем <em>ужин</em></h2>
+  <p>Каждый визит в Савур — это событие. Мы создаём пространство, где время замедляется, а каждая деталь продумана до совершенства.</p>
+  <div class="exp-grid">
+    <div class="exp-item">
+      <div class="exp-icon">♪</div>
+      <div class="exp-title">Живая музыка</div>
+      <p class="exp-desc">По пятницам и субботам — джазовые квартеты и фортепианные вечера</p>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">⬡</div>
+      <div class="exp-title">Винный погреб</div>
+      <p class="exp-desc">Более 300 позиций — от классических бордо до редких грузинских вин</p>
+    </div>
+    <div class="exp-item">
+      <div class="exp-icon">✦</div>
+      <div class="exp-title">Приватные залы</div>
+      <p class="exp-desc">Три отдельных зала для особых случаев и деловых встреч</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation" class="reservation reveal">
+  <div class="section-label" style="justify-content:center">Бронирование</div>
+  <h2>Забронировать <em>стол</em></h2>
+  <p>Ждём вас каждый день с 18:00 до 00:00<br>+7 (495) 123-45-67</p>
+  <div class="res-form">
+    <input type="text" placeholder="Ваше имя">
+    <input type="date">
+    <select>
+      <option value="" disabled selected>Гостей</option>
+      <option>1 гость</option>
+      <option>2 гостя</option>
+      <option>3–4 гостя</option>
+      <option>5+ гостей</option>
+    </select>
+    <button class="res-submit">Забронировать</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Савур</div>
+  <div class="footer-center">
+    Москва, Патриаршие пруды<br>
+    Малый Патриарший пер., 1<br>
+    Пн–Вс: 18:00 — 00:00
+  </div>
+  <div class="footer-right">
+    <a href="#">Instagram</a>
+    <a href="#">Telegram</a>
+    <a href="#">Политика конфиденциальности</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2024 Савур. Все права защищены.</span>
+  <span class="credit">Дизайн и разработка: <a href="#">Tolybay Uakhit</a></span>
+</div>
+
+<script>
+  // Progressive enhancement: hide for animation only if JS works
+  document.querySelectorAll(".reveal").forEach(el => { el.style.opacity = "0"; el.style.transform = "translateY(25px)"; });
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+  function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) *.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); }
+  animRing();
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  // Reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+
+  // Menu tabs
+  document.querySelectorAll('.menu-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Климов и Партнёры — Юридическая компания</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #faf9f7;
+  --white: #ffffff;
+  --dark: #1a1a18;
+  --navy: #1c2a44;
+  --gold: #b8963e;
+  --gold-light: #d4af6a;
+  --text: #2c2c28;
+  --muted: #888880;
+  --border: #e0ddd6;
+  --light: #f2f0eb;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.nav-top {
+  background: var(--navy);
+  padding: 0.5rem 5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nav-top span { font-size: 0.72rem; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; }
+.nav-top a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.72rem; transition: color 0.2s; }
+.nav-top a:hover { color: var(--gold-light); }
+.nav-main {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 5rem;
+}
+.nav-logo {
+  display: flex; flex-direction: column; line-height: 1.2;
+}
+.nav-logo-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: var(--navy);
+  letter-spacing: 0.03em;
+}
+.nav-logo-sub {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0; right: 0; height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.nav-links a:hover { color: var(--navy); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.btn-consult {
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  padding: 0.7rem 1.8rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-consult:hover { background: var(--gold); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  padding-top: 120px;
+}
+.hero-left {
+  background: var(--navy);
+  padding: 6rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(184,150,62,0.12), transparent 70%);
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+.hero-eyebrow::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+.hero-title em { font-style: italic; color: var(--gold-light); }
+.hero-desc {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.9rem;
+  line-height: 2;
+  max-width: 400px;
+  margin-bottom: 3rem;
+}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-gold {
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  padding: 1rem 2.5rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-gold:hover { background: var(--gold-light); }
+.btn-outline-white {
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 1rem 2rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-outline-white:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+.hero-cert {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; gap: 2.5rem;
+}
+.cert-item { text-align: left; }
+.cert-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--gold);
+  display: block;
+}
+.cert-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-top: 0.2rem;
+  display: block;
+}
+.hero-right {
+  background: var(--light);
+  padding: 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.hero-right h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+.hero-right > p {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-bottom: 2.5rem;
+}
+.practice-list { display: flex; flex-direction: column; gap: 0; }
+.practice-item {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--border);
+  border-top: none;
+  cursor: default;
+  transition: all 0.25s;
+  background: var(--white);
+}
+.practice-item:first-child { border-top: 1px solid var(--border); }
+.practice-item:hover { background: var(--navy); color: var(--white); }
+.practice-item:hover .practice-name { color: var(--white); }
+.practice-item:hover .practice-desc { color: rgba(255,255,255,0.5); }
+.practice-icon {
+  width: 44px; height: 44px;
+  background: var(--light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: background 0.25s;
+}
+.practice-item:hover .practice-icon { background: rgba(255,255,255,0.1); }
+.practice-name { font-weight: 700; font-size: 0.88rem; color: var(--navy); transition: color 0.25s; }
+.practice-desc { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; transition: color 0.25s; }
+.practice-arrow { margin-left: auto; color: var(--gold); font-size: 1.1rem; }
+
+/* ABOUT */
+.about { padding: 8rem 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center; }
+.about-label {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+}
+.about-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+.about h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+}
+.about h2 em { font-style: italic; color: var(--gold); }
+.about p { color: var(--muted); font-size: 0.88rem; line-height: 2; margin-bottom: 1.2rem; }
+.values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-top: 3rem; }
+.value-item {
+  background: var(--white);
+  padding: 1.5rem;
+}
+.value-name { font-weight: 700; font-size: 0.85rem; color: var(--navy); margin-bottom: 0.3rem; }
+.value-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.7; }
+.about-visual {
+  background: var(--navy);
+  padding: 4rem;
+  position: relative;
+}
+.about-visual::after {
+  content: '';
+  position: absolute; top: -15px; right: -15px;
+  border: 1px solid var(--gold);
+  width: 100%; height: 100%;
+  z-index: -1;
+}
+.about-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+.about-quote-author { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--gold); }
+.experience-nums { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.1); margin-top: 3rem; }
+.exp-num-item { padding: 1.5rem; background: rgba(255,255,255,0.04); text-align: center; }
+.exp-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); display: block; }
+.exp-num-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 0.3rem; display: block; }
+
+/* TEAM */
+.team { padding: 8rem 5rem; background: var(--light); }
+.team-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+.team-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  color: var(--navy);
+}
+.team-header h2 em { font-style: italic; color: var(--gold); }
+.team-header p { color: var(--muted); font-size: 0.82rem; max-width: 300px; text-align: right; line-height: 1.8; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+.team-card {
+  background: var(--white);
+  padding: 2.5rem;
+  transition: background 0.3s;
+}
+.team-card:hover { background: var(--navy); }
+.team-card:hover .team-name { color: var(--white); }
+.team-card:hover .team-role { color: var(--gold); }
+.team-card:hover .team-bio { color: rgba(255,255,255,0.45); }
+.team-avatar {
+  width: 72px; height: 72px;
+  background: var(--light);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+  transition: background 0.3s, color 0.3s;
+}
+.team-card:hover .team-avatar { background: rgba(184,150,62,0.15); color: var(--gold); }
+.team-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 0.3rem; transition: color 0.3s; }
+.team-role { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; transition: color 0.3s; }
+.team-bio { font-size: 0.78rem; color: var(--muted); line-height: 1.8; transition: color 0.3s; }
+
+/* CONTACT */
+.contact { padding: 8rem 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; }
+.contact-left h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+}
+.contact-left h2 em { font-style: italic; color: var(--gold); }
+.contact-left p { color: var(--muted); font-size: 0.88rem; line-height: 2; margin-bottom: 3rem; }
+.contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
+.contact-detail { display: flex; gap: 1.2rem; align-items: flex-start; }
+.contact-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+}
+.contact-info-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+.contact-info-value { font-size: 0.88rem; color: var(--text); }
+.contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+.form-group input, .form-group select, .form-group textarea {
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.85rem 1rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-group select { cursor: pointer; }
+.btn-submit {
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  padding: 1rem 3rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+.btn-submit:hover { background: var(--gold); }
+
+/* FOOTER */
+footer {
+  background: var(--navy);
+  padding: 5rem;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 5rem;
+  border-top: 3px solid var(--gold);
+}
+.footer-logo-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+.footer-logo-sub { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+.footer-brand p { color: rgba(255,255,255,0.35); font-size: 0.78rem; line-height: 2; max-width: 260px; }
+.footer-col h4 {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem;
+}
+.footer-col a {
+  display: block; color: rgba(255,255,255,0.35);
+  text-decoration: none; font-size: 0.8rem; line-height: 2.3;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  background: rgba(0,0,0,0.3);
+  padding: 1.5rem 5rem;
+  display: flex; justify-content: space-between;
+  font-size: 0.65rem; color: rgba(255,255,255,0.25); letter-spacing: 0.05em;
+}
+.footer-bottom a { color: var(--gold); opacity: 0.6; text-decoration: none; }
+
+/* BURGER */
+.burger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 101; }
+.burger span { display: block; width: 24px; height: 2px; background: var(--navy); margin: 5px 0; transition: all 0.3s; }
+.burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* REVEAL */
+.reveal { opacity: 1; transform: translateY(20px); transition: all 0.9s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  .nav-top { padding: 0.5rem 1.5rem; flex-direction: column; gap: 0.3rem; text-align: center; }
+  .nav-main { padding: 1rem 1.5rem; }
+  .burger { display: block; }
+  .nav-links {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.98);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s;
+    z-index: 100;
+  }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a { font-size: 1.1rem; color: var(--navy); }
+  .btn-consult { display: none; }
+
+  .hero { grid-template-columns: 1fr; padding-top: 100px; }
+  .hero-left { padding: 3rem 1.5rem; }
+  .hero-title { font-size: clamp(2rem, 7vw, 3rem); }
+  .hero-btns { flex-direction: column; }
+  .hero-btns .btn-gold, .hero-btns .btn-outline-white { width: 100%; text-align: center; }
+  .hero-cert { gap: 1.5rem; }
+  .cert-num { font-size: 1.5rem; }
+  .hero-right { padding: 2rem 1.5rem; }
+
+  .about { padding: 3rem 1.5rem; grid-template-columns: 1fr; gap: 2rem; }
+  .about-visual::after { display: none; }
+  .values-grid { grid-template-columns: 1fr; }
+
+  .team { padding: 3rem 1.5rem; }
+  .team-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .team-header p { text-align: left; }
+  .team-grid { grid-template-columns: 1fr; }
+
+  .contact { padding: 3rem 1.5rem; grid-template-columns: 1fr; gap: 2rem; }
+  .form-row { grid-template-columns: 1fr; }
+
+  footer { grid-template-columns: 1fr; padding: 3rem 1.5rem; gap: 2rem; }
+  .footer-bottom { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-top">
+    <span>Пн–Пт: 09:00 – 20:00 · Сб: 10:00 – 16:00</span>
+    <div style="display:flex;gap:2rem">
+      <a href="#">+7 (495) 555-00-11</a>
+      <a href="#"><span class="__cf_email__" data-cfemail="9cf5f2faf3dcf7f0f5f1f3eab1f0fdebb2eee9">[email&#160;protected]</span></a>
+    </div>
+  </div>
+  <div class="nav-main">
+    <div class="nav-logo">
+      <span class="nav-logo-main">Климов и Партнёры</span>
+      <span class="nav-logo-sub">Юридическая компания</span>
+    </div>
+    <button class="burger" id="burger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active')"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="#about">О компании</a></li>
+      <li><a href="#practice">Практика</a></li>
+      <li><a href="#team">Команда</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+    <button class="btn-consult">Бесплатная консультация</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="practice">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Юридическая защита</div>
+    <h1 class="hero-title">Ваши интересы —<br><em>наш приоритет</em></h1>
+    <p class="hero-desc">Профессиональная юридическая помощь с 2005 года. Корпоративное право, споры, сделки. Результат — не слова, а судебные решения.</p>
+    <div class="hero-btns">
+      <button class="btn-gold">Получить консультацию</button>
+      <button class="btn-outline-white">Наша практика</button>
+    </div>
+    <div class="hero-cert">
+      <div class="cert-item"><span class="cert-num">19</span><span class="cert-label">Лет практики</span></div>
+      <div class="cert-item"><span class="cert-num">3 400+</span><span class="cert-label">Выигранных дел</span></div>
+      <div class="cert-item"><span class="cert-num">98%</span><span class="cert-label">Успешность</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <h3>Области практики</h3>
+    <p>Выберите нужную область — мы помжем</p>
+    <div class="practice-list">
+      <div class="practice-item">
+        <div class="practice-icon">⚖️</div>
+        <div>
+          <div class="practice-name">Корпоративное право</div>
+          <div class="practice-desc">M&A, структурирование сделок, корпоративные споры</div>
+        </div>
+        <div class="practice-arrow">→</div>
+      </div>
+      <div class="practice-item">
+        <div class="practice-icon">🏢</div>
+        <div>
+          <div class="practice-name">Недвижимость</div>
+          <div class="practice-desc">Сделки, due diligence, земельные вопросы</div>
+        </div>
+        <div class="practice-arrow">→</div>
+      </div>
+      <div class="practice-item">
+        <div class="practice-icon">📋</div>
+        <div>
+          <div class="practice-name">Трудовые споры</div>
+          <div class="practice-desc">Защита прав работников и работодателей</div>
+        </div>
+        <div class="practice-arrow">→</div>
+      </div>
+      <div class="practice-item">
+        <div class="practice-icon">💼</div>
+        <div>
+          <div class="practice-name">Налоговое право</div>
+          <div class="practice-desc">Споры с ФНС, оптимизация, проверки</div>
+        </div>
+        <div class="practice-arrow">→</div>
+      </div>
+      <div class="practice-item">
+        <div class="practice-icon">🛡️</div>
+        <div>
+          <div class="practice-name">Банкротство</div>
+          <div class="practice-desc">Защита кредиторов и должников</div>
+        </div>
+        <div class="practice-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about reveal">
+  <div>
+    <div class="about-label">О компании</div>
+    <h2>Доверие,<br>построенное <em>делами</em></h2>
+    <p>«Климов и Партнёры» — одна из ведущих юридических компаний Москвы с 19-летней историей. Мы специализируемся на комплексном правовом сопровождении бизнеса и частных клиентов.</p>
+    <p>Наша команда — это 12 практикующих юристов с опытом работы в крупнейших российских и международных фирмах. Мы принципиально не берёмся за дела, в которых не видим перспективы для клиента.</p>
+    <div class="values-grid">
+      <div class="value-item"><div class="value-name">Честность</div><div class="value-desc">Говорим правду о шансах до начала работы</div></div>
+      <div class="value-item"><div class="value-name">Результат</div><div class="value-desc">Оцениваем себя по судебным решениям</div></div>
+      <div class="value-item"><div class="value-name">Скорость</div><div class="value-desc">Реагируем в течение 2 часов в рабочее время</div></div>
+      <div class="value-item"><div class="value-name">Конфиденциальность</div><div class="value-desc">Ваши данные никогда не покидают нашу компанию</div></div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-quote">«Хороший юрист знает закон. Отличный юрист знает судью.»</div>
+    <div class="about-quote-author">— Андрей Климов, управляющий партнёр</div>
+    <div class="experience-nums">
+      <div class="exp-num-item"><span class="exp-num">3 400+</span><span class="exp-num-label">Дел завершено</span></div>
+      <div class="exp-num-item"><span class="exp-num">850+</span><span class="exp-num-label">Клиентов</span></div>
+      <div class="exp-num-item"><span class="exp-num">12</span><span class="exp-num-label">Юристов</span></div>
+      <div class="exp-num-item"><span class="exp-num">19</span><span class="exp-num-label">Лет опыта</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="team reveal">
+  <div class="team-header">
+    <h2>Наша <em>команда</em></h2>
+    <p>Каждый партнёр — узкий специалист с глубокой экспертизой в своей области.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">АК</div>
+      <div class="team-name">Андрей Климов</div>
+      <div class="team-role">Управляющий партнёр</div>
+      <p class="team-bio">19 лет практики. Специализация: корпоративное право, M&A, сделки с капиталом свыше $10 млн.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">ЕВ</div>
+      <div class="team-name">Елена Воронова</div>
+      <div class="team-role">Партнёр, налоговое право</div>
+      <p class="team-bio">Бывший советник ФНС. Специализация: налоговые споры, структурирование активов, международное налогообложение.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">ДМ</div>
+      <div class="team-name">Дмитрий Мартынов</div>
+      <div class="team-role">Партнёр, судебная практика</div>
+      <p class="team-bio">320+ успешно завершённых дел. Специализация: арбитраж, банкротство, защита активов в судах всех инстанций.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact reveal">
+  <div class="contact-left">
+    <h2>Свяжитесь<br>с <em>нами</em></h2>
+    <p>Первичная консультация — бесплатно и без обязательств. Расскажите о вашей ситуации, и мы оценим перспективы.</p>
+    <div class="contact-details">
+      <div class="contact-detail">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-info-label">Адрес</div>
+          <div class="contact-info-value">Москва, ул. Большая Никитская, 24, офис 301</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-info-label">Телефон</div>
+          <div class="contact-info-value">+7 (495) 555-00-11</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-info-label">Email</div>
+          <div class="contact-info-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2841464e476843444145475e0544495f065a5d">[email&#160;protected]</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <form class="contact-form">
+      <div class="form-row">
+        <div class="form-group"><label>Имя</label><input type="text" placeholder="Иван Петров"></div>
+        <div class="form-group"><label>Телефон</label><input type="tel" placeholder="+7 (___) ___-__-__"></div>
+      </div>
+      <div class="form-group">
+        <label>Область права</label>
+        <select>
+          <option value="" disabled selected>Выберите тему</option>
+          <option>Корпоративное право</option>
+          <option>Налоговые споры</option>
+          <option>Недвижимость</option>
+          <option>Трудовые споры</option>
+          <option>Банкротство</option>
+          <option>Другое</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Опишите ситуацию</label>
+        <textarea placeholder="Кратко опишите вашу проблему..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Отправить заявку →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <div class="footer-logo-main">Климов и Партнёры</div>
+    <div class="footer-logo-sub">Юридическая компания</div>
+    <p>Профессиональная юридическая защита с 2005 года. Москва и вся Россия.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Практика</h4>
+    <a href="#">Корпоративное право</a>
+    <a href="#">Налоговые споры</a>
+    <a href="#">Недвижимость</a>
+    <a href="#">Банкротство</a>
+  </div>
+  <div class="footer-col">
+    <h4>Компания</h4>
+    <a href="#">О нас</a>
+    <a href="#">Команда</a>
+    <a href="#">Карьера</a>
+    <a href="#">Новости</a>
+  </div>
+  <div class="footer-col">
+    <h4>Контакты</h4>
+    <a href="#">+7 (495) 555-00-11</a>
+    <a href="#"><span class="__cf_email__" data-cfemail="9ef7f0f8f1def5f2f7f3f1e8b3f2ffe9b0eceb">[email&#160;protected]</span></a>
+    <a href="#">Телеграм-канал</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2024 Климов и Партнёры. Все права защищены.</span>
+  <span>Дизайн и разработка: <a href="#">Tolybay Uakhit</a></span>
+</div>
+
+<script>
+  // Progressive enhancement: hide for animation only if JS works
+  document.querySelectorAll(".reveal").forEach(el => { el.style.opacity = "0"; el.style.transform = "translateY(25px)"; });
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(e => {
+    e.forEach(el => { if(el.isIntersecting) { el.target.style.opacity = "1"; el.target.style.transform = "translateY(0)"; el.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>

@@ -703,7 +703,7 @@ body::before {
   <div class="projects-list">
 
     <!-- NexFlow -->
-    <div class="pcard sr">
+    <a href="it-landing.html" class="pcard sr" style="text-decoration:none;color:inherit">
       <div class="pcard-inner">
         <div class="pcard-visual">
           <div class="mock mock-it">
@@ -739,10 +739,10 @@ body::before {
           <span class="pcard-cta">Смотреть проект →</span>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- Restaurant -->
-    <div class="pcard sr">
+    <a href="restaurant.html" class="pcard sr" style="text-decoration:none;color:inherit">
       <div class="pcard-inner">
         <div class="pcard-visual">
           <div class="mock mock-rest">
@@ -771,10 +771,10 @@ body::before {
           <span class="pcard-cta">Смотреть проект →</span>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- Law Firm -->
-    <div class="pcard sr">
+    <a href="law-firm.html" class="pcard sr" style="text-decoration:none;color:inherit">
       <div class="pcard-inner">
         <div class="pcard-visual">
           <div class="mock mock-law">
@@ -812,10 +812,10 @@ body::before {
           <span class="pcard-cta">Смотреть проект →</span>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- Barbershop -->
-    <div class="pcard sr">
+    <a href="barbershop.html" class="pcard sr" style="text-decoration:none;color:inherit">
       <div class="pcard-inner">
         <div class="pcard-visual">
           <div class="mock mock-barber">
@@ -848,10 +848,10 @@ body::before {
           <span class="pcard-cta">Смотреть проект →</span>
         </div>
       </div>
-    </div>
+    </a>
 
     <!-- Fitness -->
-    <div class="pcard sr">
+    <a href="fitness.html" class="pcard sr" style="text-decoration:none;color:inherit">
       <div class="pcard-inner">
         <div class="pcard-visual">
           <div class="mock mock-fit">
@@ -886,7 +886,7 @@ body::before {
           <span class="pcard-cta">Смотреть проект →</span>
         </div>
       </div>
-    </div>
+    </a>
 
   </div>
 </section>
@@ -898,7 +898,7 @@ body::before {
   <div class="contact-links">
     <a href="https://t.me/" class="contact-link">Telegram</a>
     <a href="https://instagram.com/" class="contact-link">Instagram</a>
-    <a href="mailto:hello@example.com" class="contact-link">Email</a>
+    <a href="/cdn-cgi/l/email-protection#751d1019191a35100d14180519105b161a18" class="contact-link">Email</a>
   </div>
 </section>
 
@@ -906,19 +906,11 @@ body::before {
   <span>© 2024 Tolybay Uakhit. Все проекты разработаны с нуля.</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Scroll reveal
 const items = document.querySelectorAll('.sr');
 items.forEach(el => el.classList.add('sr-hidden'));
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      e.target.classList.remove('sr-hidden');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-items.forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+      e.target.classList.remove('sr-hid

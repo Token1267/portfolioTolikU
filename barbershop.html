@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLADE — Барбершоп</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f2ede6;
+  --black: #0d0d0d;
+  --red: #d42b2b;
+  --white: #fafaf8;
+  --gray: #888;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 3rem;
+  background: var(--black);
+  border-bottom: 3px solid var(--red);
+}
+.nav-logo {
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+}
+.nav-logo span { color: var(--red); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: rgba(250,250,248,0.6);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--red); }
+.nav-book {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 0.7rem 1.8rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.nav-book:hover { background: #b52020; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  background: var(--black);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-left {
+  padding: 5rem 3rem 5rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 1;
+}
+.hero-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: var(--red);
+  margin-bottom: 1.5rem;
+}
+.hero-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(4rem, 8vw, 8rem);
+  line-height: 0.88;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.hero-title .slash { color: var(--red); }
+.hero-desc {
+  color: rgba(250,250,248,0.5);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  max-width: 360px;
+  margin-bottom: 3rem;
+}
+.hero-actions { display: flex; gap: 1rem; align-items: center; }
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 1rem 2.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: #b52020; transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--red); }
+.btn-secondary {
+  background: transparent;
+  color: rgba(250,250,248,0.6);
+  border: 2px solid rgba(250,250,248,0.2);
+  padding: 1rem 2rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-secondary:hover { border-color: var(--white); color: var(--white); }
+.hero-right {
+  position: relative;
+  background: #1a1a1a;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-right::before {
+  content: 'BLADE';
+  font-family: 'Anton', sans-serif;
+  font-size: 18vw;
+  color: rgba(212,43,43,0.06);
+  position: absolute;
+  white-space: nowrap;
+}
+.hero-badge {
+  position: absolute; bottom: 3rem; right: 3rem;
+  width: 120px; height: 120px;
+  border: 2px solid var(--red);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+}
+.hero-badge-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 2.5rem;
+  color: var(--red);
+  line-height: 1;
+}
+.hero-badge-text {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(250,250,248,0.5);
+  margin-top: 0.3rem;
+}
+.hero-scissors {
+  font-size: 8rem;
+  opacity: 0.15;
+  color: var(--white);
+  transform: rotate(45deg);
+}
+.hero-stripe {
+  position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: repeating-linear-gradient(90deg, var(--red) 0, var(--red) 20px, transparent 20px, transparent 40px);
+  opacity: 0.4;
+}
+
+/* MARQUEE */
+.marquee-wrap {
+  background: var(--red);
+  padding: 1rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 18s linear infinite;
+}
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.marquee-item {
+  display: inline-block;
+  font-family: 'Anton', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin: 0 2rem;
+}
+.marquee-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  margin: 0 1rem;
+  vertical-align: middle;
+}
+
+/* SERVICES */
+.services { padding: 7rem 5rem; background: var(--bg); }
+.services-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: end;
+  margin-bottom: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 3px solid var(--black);
+}
+.services-header h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+.services-header h2 em { color: var(--red); font-style: normal; }
+.services-header p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 3px solid var(--black); }
+.service-card {
+  padding: 2.5rem;
+  border-right: 3px solid var(--black);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+.service-card:last-child { border-right: none; }
+.service-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 5px;
+  background: var(--black);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.service-card:hover::before { transform: scaleX(1); background: var(--red); }
+.service-card:hover { background: var(--black); color: var(--white); }
+.service-card:hover .service-price { color: var(--red); }
+.service-card:hover .service-desc { color: rgba(250,250,248,0.5); }
+.service-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: rgba(0,0,0,0.08);
+  line-height: 1;
+  margin-bottom: 1rem;
+  transition: color 0.3s;
+}
+.service-card:hover .service-num { color: rgba(255,255,255,0.06); }
+.service-name {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.service-desc {
+  font-size: 0.78rem;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  transition: color 0.3s;
+}
+.service-footer { display: flex; justify-content: space-between; align-items: center; }
+.service-price {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.5rem;
+  color: var(--black);
+  transition: color 0.3s;
+}
+.service-time {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  text-transform: uppercase;
+}
+
+/* MASTERS */
+.masters { padding: 7rem 5rem; background: var(--black); }
+.masters-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--white);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.masters-title em { color: var(--red); font-style: normal; }
+.masters-sub {
+  color: rgba(250,250,248,0.4);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4rem;
+}
+.masters-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.master-card {
+  background: #1a1a1a;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.master-card:hover { background: #222; }
+.master-avatar {
+  width: 80px; height: 80px;
+  border: 3px solid var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.8rem;
+  color: var(--red);
+  margin-bottom: 1.5rem;
+}
+.master-name {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+.master-role {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 1rem;
+}
+.master-exp {
+  font-size: 0.78rem;
+  color: rgba(250,250,248,0.4);
+  line-height: 1.7;
+}
+.master-years {
+  position: absolute; top: 2rem; right: 2rem;
+  font-family: 'Anton', sans-serif;
+  font-size: 2.5rem;
+  color: rgba(212,43,43,0.1);
+}
+
+/* CTA BANNER */
+.cta-banner {
+  padding: 5rem;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 3rem;
+}
+.cta-banner h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  text-transform: uppercase;
+  color: var(--white);
+  line-height: 0.9;
+}
+.cta-banner p {
+  color: rgba(250,250,248,0.7);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  max-width: 400px;
+}
+.btn-white {
+  background: var(--white);
+  color: var(--red);
+  border: none;
+  padding: 1.2rem 3rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-white:hover { transform: translate(-3px, -3px); box-shadow: 5px 5px 0 rgba(0,0,0,0.3); }
+
+/* FOOTER */
+footer {
+  background: var(--black);
+  padding: 4rem 5rem;
+  display: grid; grid-template-columns: 2fr 1fr 1fr;
+  gap: 4rem;
+  border-top: 3px solid var(--red);
+}
+.footer-brand .logo {
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  color: var(--white);
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+.footer-brand .logo span { color: var(--red); }
+.footer-brand p {
+  color: rgba(250,250,248,0.4);
+  font-size: 0.78rem;
+  line-height: 1.8;
+  max-width: 280px;
+}
+.footer-col h4 {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 1.5rem;
+}
+.footer-col a {
+  display: block;
+  color: rgba(250,250,248,0.4);
+  text-decoration: none;
+  font-size: 0.78rem;
+  line-height: 2.2;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  background: #080808;
+  padding: 1.2rem 5rem;
+  display: flex; justify-content: space-between;
+  font-size: 0.65rem;
+  color: rgba(250,250,248,0.25);
+  letter-spacing: 0.1em;
+}
+.footer-bottom a { color: var(--red); opacity: 0.7; text-decoration: none; }
+
+/* BURGER */
+.burger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 101; }
+.burger span { display: block; width: 24px; height: 2px; background: var(--white); margin: 5px 0; transition: all 0.3s; }
+.burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* REVEAL */
+.reveal { opacity: 1; transform: translateY(20px); transition: all 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-logo { font-size: 1.5rem; }
+  .burger { display: block; }
+  .nav-links {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--black);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s;
+    z-index: 100;
+  }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a { font-size: 1.2rem; }
+  .nav-book { display: none; }
+
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 6rem 1.5rem 3rem; }
+  .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
+  .hero-desc { font-size: 0.85rem; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn-primary, .hero-actions .btn-secondary { width: 100%; text-align: center; }
+  .hero-right { min-height: 200px; }
+  .hero-badge { bottom: 1.5rem; right: 1.5rem; width: 80px; height: 80px; }
+  .hero-badge-num { font-size: 1.8rem; }
+
+  .services { padding: 3rem 1.5rem; }
+  .services-header { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; padding-bottom: 1.5rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { border-right: none; border-bottom: 3px solid var(--black); }
+  .service-card:last-child { border-bottom: none; }
+
+  .masters { padding: 3rem 1.5rem; }
+  .masters-grid { grid-template-columns: 1fr; }
+
+  .cta-banner { padding: 3rem 1.5rem; flex-direction: column; text-align: center; }
+  .cta-banner p { text-align: center; }
+
+  footer { grid-template-columns: 1fr; padding: 3rem 1.5rem; gap: 2rem; }
+  .footer-bottom { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">BL<span>/</span>ADE</div>
+  <button class="burger" id="burger" onclick="document.querySelector('.nav-links').classList.toggle('open');this.classList.toggle('active')"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#masters">Мастера</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <button class="nav-book">Записаться</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-stripe"></div>
+  <div class="hero-left">
+    <div class="hero-num">// Барбершоп №1 в Алмате</div>
+    <h1 class="hero-title">
+      ТВОЙ<br>
+      <span class="slash">ИД</span>ЕАЛ<br>
+      ЬНЫЙ<br>
+      СТИЛЬ
+    </h1>
+    <p class="hero-desc">Профессиональные стрижки, горячее бритьё и уход за бородой. Записывайтесь онлайн — без очередей.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">Записаться онлайн</button>
+      <a href="#services" class="btn-secondary">Услуги и цены</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-scissors">✂</div>
+    <div class="hero-badge">
+      <span class="hero-badge-num">8+</span>
+      <span class="hero-badge-text">лет<br>опыта</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="marquee-item">СТРИЖКА</span><span class="marquee-dot"></span>
+    <span class="marquee-item">БОРОДА</span><span class="marquee-dot"></span>
+    <span class="marquee-item">БРИТЬЁ</span><span class="marquee-dot"></span>
+    <span class="marquee-item">УКЛАДКА</span><span class="marquee-dot"></span>
+    <span class="marquee-item">УХОД</span><span class="marquee-dot"></span>
+    <span class="marquee-item">BLADE BARBERSHOP</span><span class="marquee-dot"></span>
+    <span class="marquee-item">СТРИЖКА</span><span class="marquee-dot"></span>
+    <span class="marquee-item">БОРОДА</span><span class="marquee-dot"></span>
+    <span class="marquee-item">БРИТЬЁ</span><span class="marquee-dot"></span>
+    <span class="marquee-item">УКЛАДКА</span><span class="marquee-dot"></span>
+    <span class="marquee-item">УХОД</span><span class="marquee-dot"></span>
+    <span class="marquee-item">BLADE BARBERSHOP</span><span class="marquee-dot"></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services" class="services reveal">
+  <div class="services-header">
+    <h2>НАШИ<br><em>УСЛУГИ</em></h2>
+    <p>Каждая процедура — результат многолетней практики и любви к своему делу. Используем только профессиональные инструменты и средства.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Классическая стрижка</div>
+      <p class="service-desc">Стрижка ножницами или машинкой с мойкой и укладкой</p>
+      <div class="service-footer">
+        <span class="service-price">2 500 ₸</span>
+        <span class="service-time">60 мин</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Стрижка + борода</div>
+      <p class="service-desc">Комплекс: стрижка, оформление бороды, укладка</p>
+      <div class="service-footer">
+        <span class="service-price">4 000 ₸</span>
+        <span class="service-time">90 мин</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Горячее бритьё</div>
+      <p class="service-desc">Традиционное бритьё опасной бритвой с горячим полотенцем</p>
+      <div class="service-footer">
+        <span class="service-price">3 000 ₸</span>
+        <span class="service-time">45 мин</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MASTERS -->
+<section id="masters" class="masters reveal">
+  <h2 class="masters-title">НАШИ <em>МАСТЕРА</em></h2>
+  <p class="masters-sub">// Опытные профессионалы своего дела</p>
+  <div class="masters-grid">
+    <div class="master-card">
+      <div class="master-years">12</div>
+      <div class="master-avatar">АК</div>
+      <div class="master-name">Азамат Кенжебаев</div>
+      <div class="master-role">Старший барбер</div>
+      <p class="master-exp">12 лет опыта. Специализация: классические стрижки и горячее бритьё</p>
+    </div>
+    <div class="master-card">
+      <div class="master-years">7</div>
+      <div class="master-avatar">ДС</div>
+      <div class="master-name">Дамир Сейтов</div>
+      <div class="master-role">Барбер</div>
+      <p class="master-exp">7 лет опыта. Специализация: fade, текстурные стрижки, работа с бородой</p>
+    </div>
+    <div class="master-card">
+      <div class="master-years">5</div>
+      <div class="master-avatar">МА</div>
+      <div class="master-name">Марат Ахметов</div>
+      <div class="master-role">Барбер</div>
+      <p class="master-exp">5 лет опыта. Специализация: современные молодёжные стрижки, укладки</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="contacts" class="cta-banner reveal">
+  <div>
+    <h2>ЗАПИШИСЬ<br>СЕЙЧАС</h2>
+  </div>
+  <p>Онлайн-запись за 2 минуты. Выбери мастера, дату и время — без звонков и очередей.</p>
+  <button class="btn-white">Записаться онлайн →</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo">BL<span>/</span>ADE</div>
+    <p>Профессиональный барбершоп в центре Алматы. Работаем с 10:00 до 22:00 без выходных.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Адрес</h4>
+    <a href="#">Алматы, ул. Абая 150</a>
+    <a href="#">ТЦ Mega, 2 этаж</a>
+    <a href="#">+7 (727) 123-45-67</a>
+  </div>
+  <div class="footer-col">
+    <h4>Соцсети</h4>
+    <a href="#">Instagram</a>
+    <a href="#">Telegram</a>
+    <a href="#">2ГИС</a>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2024 BLADE Barbershop. Все права защищены.</span>
+  <span>Разработка: <a href="#">Tolybay Uakhit</a></span>
+</div>
+
+<script>
+  // Progressive enhancement: hide for animation only if JS works
+  document.querySelectorAll(".reveal").forEach(el => { el.style.opacity = "0"; el.style.transform = "translateY(25px)"; });
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(e => {
+    e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
