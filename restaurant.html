@@ -549,7 +549,7 @@
   .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
   /* SCROLL REVEAL */
-  .reveal { opacity: 1; transform: translateY(25px); transition: all 0.9s ease; }
+  .reveal { opacity: 1; transform: translateY(0); transition: all 0.9s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 768px) {
@@ -764,7 +764,6 @@
 
 <script>
   // Progressive enhancement: hide for animation only if JS works
-  document.querySelectorAll(".reveal").forEach(el => { el.style.opacity = "0"; el.style.transform = "translateY(25px)"; });
   // Cursor
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');

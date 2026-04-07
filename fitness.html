@@ -428,7 +428,7 @@ footer {
 .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
 /* REVEAL */
-.reveal { opacity: 1; transform: translateY(20px); transition: all 0.8s ease; }
+.reveal { opacity: 1; transform: translateY(0); transition: all 0.8s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 768px) {
@@ -656,7 +656,6 @@ footer {
 
 <script>
   // Progressive enhancement: hide for animation only if JS works
-  document.querySelectorAll(".reveal").forEach(el => { el.style.opacity = "0"; el.style.transform = "translateY(25px)"; });
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(e => {
     e.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible'); });
